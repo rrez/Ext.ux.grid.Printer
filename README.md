@@ -30,7 +30,7 @@ var myGrid = new Ext.grid.GridPanel({
 });
 
 Ext.ux.grid.Printer.print(myGrid);
-```js
+```
 
 ### Options
 
