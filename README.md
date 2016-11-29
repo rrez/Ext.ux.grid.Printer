@@ -33,6 +33,9 @@ Ext.ux.grid.Printer.print(myGrid);
 ```js
 
 ### Options
+
+You need to set the custom config before calling Ext.ux.grid.Printer.print function.
+
 You can customize some options:
 
  - to disable the automatic printing (the print window will not open, user will only see the print version of the grid).
@@ -45,8 +48,5 @@ Ext.ux.grid.Printer.printAutomatically = false;
 
 ```js
 Ext.ux.grid.Printer.stylesheetPath = '/some/other/path/gridPrint.css';
-```js
-
-
-You need to set the custom config before calling Ext.ux.grid.Printer.print function.
+```
 
