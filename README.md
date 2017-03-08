@@ -3,6 +3,12 @@
 Ext.ux.grid.Printer is a Extjs library that provides a way of printing Ext Grid Component (see what is Extjs [there](https://www.sencha.com/products/extjs/#overview)).
 It's a fork of https://github.com/loiane/extjs4-ux-gridprinter which is no more maintained.
 
+This component is used in [Arhia](www.arhia.fr) applications and we aim to maintain it.
+
+We are open to PR, if you want to contribute & send a PR, please :
+- explain the problem or the feature the PR is intented to implement
+- link a [Sencha Fiddle](https://fiddle.sencha.com/#home) to demonstrate the issue/feature
+
 ## Installation
 
 Place the folder ux/grid in your project.
@@ -28,6 +34,8 @@ var myGrid = new Ext.grid.GridPanel({
 
 Ext.ux.grid.Printer.print(myGrid);
 ```
+
+Example : https://fiddle.sencha.com/#view/editor&fiddle/1rge
 
 ### Options
 
