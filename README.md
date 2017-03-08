@@ -6,7 +6,7 @@ It's a fork of https://github.com/loiane/extjs4-ux-gridprinter which is no more 
 This component is used in [Arhia](http://www.arhia.fr) applications and we aim to maintain it.
 
 We are open to PR, if you want to contribute & send a PR, please :
-- explain the problem or the feature the PR is intented to implement
+- explain the problem or the feature the PR is intended to implement
 - link a [Sencha Fiddle](https://fiddle.sencha.com/#home) to demonstrate the issue/feature
 
 ## Installation
