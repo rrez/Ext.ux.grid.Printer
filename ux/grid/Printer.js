@@ -303,7 +303,7 @@ Ext.define("Ext.ux.grid.Printer", {
                            	  };
                     	if (column.xtype == 'templatecolumn')
                     	{
-                    		value = column.tpl ? column.tpl.apply(rcd.data) : value;
+                    		value = column.tpl ? column.tpl.apply(rcd.getData(true)) : value;
                     	}
                     	else if (column.renderer) {
                             if (column instanceof Ext.tree.Column) {
@@ -317,7 +317,7 @@ Ext.define("Ext.ux.grid.Printer", {
                     },
                     applyTpl: function(rcd)
                     {
-                       var html = this.expanderTemplate.apply(rcd.data); 
+                       var html = this.expanderTemplate.apply(rcd.getData(true)); 
                        
                        return html;
                     },
@@ -704,7 +704,7 @@ Ext.define("Ext.ux.grid.Printer", {
 				if (column.renderer && column.xtype != 'templatecolumn')
 					value = column.renderer.call(this.grid, value, meta, rcd, -1, col - 1, this.grid.store, this.grid.view);
 				else if (column.renderer && column.xtype == 'templatecolumn')
-					value = column.tpl.apply(rcd.data);
+					value = column.tpl.apply(rcd.getData(true));
 
                         	return this.getHtml(value, meta);
                         },
