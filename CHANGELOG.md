@@ -1,11 +1,12 @@
 
-## Modified by Arnaud Benhamdine - 2022-02-02
+## 2022-02-02
 
-- Add option `headerExtra`
-- Add option `headerContent`
-- Add option `hideExpandedRow`
+- Add options `headerExtra`, `headerContent` and `hideExpandedRow`. See Readme for usage.  
 - Tested using ExtJS 6.5, 7.1
 
+## 2017-03-08
+
+- fix missing data in template column rendering (#4)
 ## Modified by Alexandr Arzamastsev - 2013-Nov-20
 
 - Set printLinkText and closeLinkText as params
