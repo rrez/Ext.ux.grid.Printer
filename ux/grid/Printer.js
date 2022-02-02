@@ -1,73 +1,6 @@
 /**
  * @class Ext.ux.grid.Printer
  * @author Ed Spencer (edward@domine.co.uk)
- * Helper class to easily print the contents of a grid. Will open a new window with a table where the first row
- * contains the headings from your column model, and with a row for each item in your grid's store. When formatted
- * with appropriate CSS it should look very similar to a default grid. If renderers are specified in your column
- * model, they will be used in creating the table. Override headerTpl and bodyTpl to change how the markup is generated
- * 
- * Usage:
- * 
- * 1 - Add Ext.Require Before the Grid code
- * Ext.require([
- *   'Ext.ux.grid.GridPrinter',
- * ]);
- * 
- * 2 - Declare the Grid 
- * var grid = Ext.create('Ext.grid.Panel', {
- *   columns: //some column model,
- *   store   : //some store
- * });
- * 
- * 3 - Print!
- * Ext.ux.grid.Printer.mainTitle = 'Your Title here'; //optional
- * Ext.ux.grid.Printer.print(grid);
- * 
- * Original url: http://edspencer.net/2009/07/printing-grids-with-ext-js.html
- * 
- * Modified by Loiane Groner (me@loiane.com) - September 2011 - Ported to Ext JS 4
- * http://loianegroner.com (English)
- * http://loiane.com (Portuguese)
- * 
- * Modified by Bruno Sales - August 2012
- * 
- * Modified by Paulo Goncalves - March 2012
- * 
- * Modified by Beto Lima - March 2012
- * 
- * Modified by Beto Lima - April 2012
- *
- * Modified by Paulo Goncalves - May 2012
- * 
- * Modified by Nielsen Teixeira - 2012-05-02
- *
- * Modified by Joshua Bradley - 2012-06-01
- * 
- * Modified by Loiane Groner - 2012-09-08
- * 
- * Modified by Loiane Groner - 2012-09-24 
- *
- * Modified by Loiane Groner - 2012-10-17
- * FelipeBR contribution: Fixed: support for column name that contains numbers
- * Fixed: added support for template columns
- *
- * Modified by Loiane Groner - 2013-Feb-26
- * Fixed: added support for row expander plugin
- * Tested using Ext JS 4.1.2
- *
- * Modified by Steven Ervin - 2013-Sep-18
- * Added support for summary and groupingsummary features
- * Aligned columns according to grid column's alignment setting.
- * Updated to use columnManager to recognize grid reconfiguration
- * changes under 4.2.1.
- * 
- * Modified by Steven Ervin - 2013-Oct-24
- * Added support for using the MetaData object to style the output.
- * Added support for Server generated summaries.
- *
- * Modified by Alexandr Arzamastsev - 2013-Nov-20
- * Set printLinkText and closeLinkText as params
- * Added param for page title.
  */
 Ext.define("Ext.ux.grid.Printer", {
     requires: 'Ext.XTemplate',
@@ -201,6 +134,7 @@ Ext.define("Ext.ux.grid.Printer", {
                 var scriptPath = Ext.Loader.getPath('Ext.ux.grid.Printer');
                 this.stylesheetPath = scriptPath.substring(0, scriptPath.indexOf('Printer.js')) + 'gridPrinterCss/print.css';
             }
+            var headExtra = this.headExtra ? this.headExtra : ''
 
             //use the headerTpl and bodyTpl markups to create the main XTemplate below
             var headings = Ext.create('Ext.XTemplate', this.headerTpl).apply(columns);
@@ -215,7 +149,7 @@ Ext.define("Ext.ux.grid.Printer", {
                 }
             });
 
-            if (expanderTemplate) {
+            if (expanderTemplate && !this.hideExpandedRow) {
                 pluginsBodyMarkup = [
                     '<tr class="{[xindex % 2 === 0 ? "even" : "odd"]}"><td colspan="' + columns.length + '">',
                     '{[ this.applyTpl(values) ]}',
@@ -225,6 +159,7 @@ Ext.define("Ext.ux.grid.Printer", {
 
             var title = (grid.title) ? grid.title : this.pageTitle;
             var summaryFeature = this.getFeature(grid, 'summary');
+            var headerContent = this.headerContent ? "<div style='margin:10px;font-family:Nunito,arial;font-size:14px'>" + this.headerContent + "</div>" : ''
 
             //Here because inline styles using CSS, the browser did not show the correct formatting of the data the first time that loaded
             var htmlMarkup = [
@@ -233,6 +168,7 @@ Ext.define("Ext.ux.grid.Printer", {
                 '<head>',
                 '<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />',
                 '<link href="' + this.stylesheetPath + '" rel="stylesheet" type="text/css" />',
+                headExtra,
                 '<title>' + title + '</title>',
                 '<script type="text/javascript">',
                 'function printOnload() {["{"]}',
@@ -249,6 +185,9 @@ Ext.define("Ext.ux.grid.Printer", {
                 '<div class="' + Ext.baseCSSPrefix + 'ux-grid-printer-noprint ' + Ext.baseCSSPrefix + 'ux-grid-printer-links">',
                 '<a class="' + Ext.baseCSSPrefix + 'ux-grid-printer-linkprint" href="javascript:void(0);" onclick="window.print();">' + this.printLinkText + '</a>',
                 '<a class="' + Ext.baseCSSPrefix + 'ux-grid-printer-linkclose" href="javascript:void(0);" onclick="window.close();">' + this.closeLinkText + '</a>',
+                '</div>',
+                '<div>',
+                headerContent,
                 '</div>',
                 '<h1>' + this.mainTitle + '</h1>',
                 '<table>',
@@ -278,7 +217,7 @@ Ext.define("Ext.ux.grid.Printer", {
                     columns: columns,
                     hasSummary: Ext.isObject(summaryFeature),
                     summaryFeature: summaryFeature,
-                    expanderTemplate: expanderTemplate,
+                    expanderTemplate: this.hideExpandedRow ? null : expanderTemplate,
                     renderColumn: function (column, value, rcd, col) {
                         var meta = {
                             'align': column.align,
@@ -296,7 +235,7 @@ Ext.define("Ext.ux.grid.Printer", {
                             'value': value
                         };
                         if (column.xtype == 'templatecolumn') {
-                            value = column.tpl ? column.tpl.apply(rcd.getData(true)) : value;
+                            value = column.tpl ? column.tpl.apply(rcd.data) : value;
                         }
                         else if (column.renderer) {
                             if (column instanceof Ext.tree.Column) {
@@ -309,8 +248,7 @@ Ext.define("Ext.ux.grid.Printer", {
                         return this.getHtml(value, meta);
                     },
                     applyTpl: function (rcd) {
-                        var html = this.expanderTemplate.apply(rcd.getData(true));
-
+                        var html = this.expanderTemplate.apply(rcd.data);
                         return html;
                     },
                     renderSummary: function (column, colIndex) {
@@ -670,7 +608,7 @@ Ext.define("Ext.ux.grid.Printer", {
                             if (column.renderer && column.xtype != 'templatecolumn')
                                 value = column.renderer.call(this.grid, value, meta, rcd, -1, col - 1, this.grid.store, this.grid.view);
                             else if (column.renderer && column.xtype == 'templatecolumn')
-                                value = column.tpl.apply(rcd.getData(true));
+                                value = column.tpl.apply(rcd.data);
 
                             return this.getHtml(value, meta);
                         },
@@ -902,7 +840,16 @@ Ext.define("Ext.ux.grid.Printer", {
          * The path at which the print stylesheet can be found (defaults to 'ux/grid/gridPrinterCss/print.css')
          */
         stylesheetPath: null,
-
+        /**
+       * @property headExtra
+       * @type String
+       * Additional head html eg for link
+       * @example
+       * "<link
+        href="https://fonts.googleapis.com/css?family=Dosis:400,500,600,700,800|Nunito:400,400i,600,600i,700,700i|Roboto:400,400i,500,500i,700,700i"
+        rel="stylesheet">"
+       */
+        headExtra: null,
         /**
          * @property printAutomatically
          * @type Boolean
@@ -924,7 +871,19 @@ Ext.define("Ext.ux.grid.Printer", {
          * (defaults to empty)
          */
         pageTitle: 'Print View',
-
+        /**
+         * @property headerContent
+         * @type String
+         * html content to display on top of the table
+         */
+        headerContent: '',
+        /**
+        * @property hideExpandedRow
+        * @type Boolean
+        * True to disable printing of row expander template
+        * (defaults to false)
+        */
+        hideExpandedRow: false,
         /**
          * @property mainTitle
          * @type String
