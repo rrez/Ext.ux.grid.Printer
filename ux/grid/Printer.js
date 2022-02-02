@@ -238,7 +238,8 @@ Ext.define("Ext.ux.grid.Printer", {
                             value = column.tpl ? column.tpl.apply(rcd.data) : value;
                         }
                         else if (column.renderer) {
-                            if (column instanceof Ext.tree.Column) {
+                            // these types of columns renderers expects the column itself as scope (not the grid)
+                            if (column instanceof Ext.tree.Column || column.xtype == 'checkcolumn') {
                                 value = column.renderer.call(column, value, meta, rcd, -1, col - 1, this.grid.store, this.grid.view);
                             } else {
                                 value = column.renderer.call(this.grid, value, meta, rcd, -1, col - 1, this.grid.store, this.grid.view);
