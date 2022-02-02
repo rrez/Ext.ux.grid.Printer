@@ -70,9 +70,7 @@
  * Added param for page title.
  */
 Ext.define("Ext.ux.grid.Printer", {
-
     requires: 'Ext.XTemplate',
-
     statics: {
         /**
          * Prints the passed grid. Reflects on the grid's column model to build a table, and fills it using the store
@@ -912,7 +910,6 @@ Ext.define("Ext.ux.grid.Printer", {
          * of the grid (defaults to false)
          */
         printAutomatically: false,
-
         /**
          * @property closeAutomaticallyAfterPrint
          * @type Boolean
@@ -920,7 +917,6 @@ Ext.define("Ext.ux.grid.Printer", {
          * (defaults to false)
          */
         closeAutomaticallyAfterPrint: false,
-
         /**
          * @property pageTitle
          * @type String
@@ -936,21 +932,18 @@ Ext.define("Ext.ux.grid.Printer", {
          * (defaults to empty)
          */
         mainTitle: '',
-
         /**
         * Text show on print link
         * @property printLinkText
         * @type String
         */
         printLinkText: 'Print',
-
         /**
          * Text show on close link
          * @property closeLinkText
          * @type String
          */
         closeLinkText: 'Close',
-
         /**
          * @property headerTpl
          * @type {Object/Array} values
@@ -961,7 +954,6 @@ Ext.define("Ext.ux.grid.Printer", {
             '<th style="text-align: {align}">{text}</th>',
             '</tpl>'
         ],
-
         /**
          * @property bodyTpl
          * @type {Object/Array} values
@@ -973,6 +965,5 @@ Ext.define("Ext.ux.grid.Printer", {
             '\{\[ this.renderColumn(values, parent.get(values.dataIndex), parent, xindex) \]\}',
             '</tpl>'
         ]
-
     }
 });
