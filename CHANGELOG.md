@@ -2,7 +2,8 @@
 ## 2022-02-02
 
 - Add options `headerExtra`, `headerContent` and `hideExpandedRow`. See Readme for usage.  
-- Tested using ExtJS 6.5, 7.1
+- Fix : column is passed as contexte for Check columns (port of https://github.com/loiane/extjs4-ux-gridprinter/pull/33)  
+- Tested using ExtJS 7.1
 
 ## 2017-03-08
 
