@@ -5,7 +5,7 @@ It's a fork of https://github.com/loiane/extjs4-ux-gridprinter which is no more 
 
 This component is used in [Arhia](http://www.arhia.fr) applications and we aim to maintain it.
 
-It's currently used in production with ExtJS Classic 7.1.  
+It's currently used in production with ExtJS Classic 7.5.0  
 
 We are open to PR, if you want to contribute & send a PR, please :
 - explain the problem or the feature the PR is intended to implement
