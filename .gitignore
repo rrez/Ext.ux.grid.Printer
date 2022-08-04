@@ -1,2 +1,2 @@
-ExtPrinter.sublime-project
-ExtPrinter.sublime-workspace
+node_modules
+package-lock.json

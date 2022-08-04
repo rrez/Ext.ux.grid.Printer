@@ -1,15 +1,12 @@
+
 ## Overview
 
 Ext.ux.grid.Printer is a Extjs library that provides a way of printing Ext Grid Component (see what is Extjs [there](https://www.sencha.com/products/extjs/#overview)).
-It's a fork of https://github.com/loiane/extjs4-ux-gridprinter which is no more maintained.
+It's a fork of https://github.com/loiane/extjs4-ux-gridprinter which is no more maintained and from https://github.com/Arhia/Ext.ux.grid.Printer [Arhia](http://www.arhia.fr) 
 
-This component is used in [Arhia](http://www.arhia.fr) applications and we aim to maintain it.
-
-It's currently used in production with ExtJS Classic 7.5.0  
-
-We are open to PR, if you want to contribute & send a PR, please :
-- explain the problem or the feature the PR is intended to implement
-- link a [Sencha Fiddle](https://fiddle.sencha.com/#home) to demonstrate the issue/feature
+Im trying to extend this plugin further and give at a bit more bling bling 🤑💍
+For now all i do is to tidy it up, because the code realy heard to read. Also linting it up with [ESLint](https://github.com/eslint/eslint) and https://github.com/airbnb/javascript
+ **⚠️⚠️⚠️ Do not use this until you are not shure what you are doing. Right now din't check any features like grouping etc.**
 
 ## Installation
 
